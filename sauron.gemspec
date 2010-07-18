@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sauron}
-  s.version = "0.1.2"
+  s.version = "0.1.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jaime Bellmyer"]
@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
      "generators/sauron/sauron_generator.rb",
      "generators/sauron/templates/config/hydra.yml",
      "generators/sauron/templates/lib/sauron/watchr.rb",
+     "generators/sauron/templates/lib/tasks/sauron.rake",
      "generators/sauron/templates/sauron_watchr.rb",
      "generators/sauron/templates/test_helper.rb",
      "lib/sauron.rb",
