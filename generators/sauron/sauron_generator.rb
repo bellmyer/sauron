@@ -5,6 +5,7 @@ class SauronGenerator < Rails::Generator::Base
     record do |m|
       m.file 'sauron_watchr.rb', 'sauron_watchr.rb'
       m.file 'test_helper.rb', 'test_helper.rb'
+      m.file 'sauron', 'sauron', :chmod => 0755
 
       m.template 'config/hydra.yml', 'config/hydra.yml'
       
