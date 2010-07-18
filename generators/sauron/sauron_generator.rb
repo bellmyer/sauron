@@ -1,0 +1,21 @@
+class SauronGenerator < Rails::Generator::Base
+  def manifest
+    options[:runners] ||= 4
+
+    record do |m|
+      m.file 'sauron_watchr.rb', 'sauron_watchr.rb'
+      m.file 'test_helper.rb', 'test_helper.rb'
+
+      m.template 'config/hydra.yml', 'config/hydra.yml'
+      
+      m.directory 'lib/sauron'
+      m.file 'lib/sauron/watchr.rb', 'lib/sauron/watchr.rb' 
+    end
+  end
+  
+  protected
+  
+  def add_options!(opt)
+    opt.on('--runners='){|v| options[:runners] = v}
+  end
+end
