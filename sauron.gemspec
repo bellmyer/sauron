@@ -15,11 +15,31 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = [
     "README"
   ]
+  s.files = [
+    "MIT-LICENSE",
+     "README",
+     "Rakefile",
+     "VERSION",
+     "generators/sauron/USAGE",
+     "generators/sauron/sauron_generator.rb",
+     "generators/sauron/templates/config/hydra.yml",
+     "generators/sauron/templates/lib/sauron/watchr.rb",
+     "generators/sauron/templates/sauron_watchr.rb",
+     "generators/sauron/templates/test_helper.rb",
+     "sauron.gemspec",
+     "tasks/sauron_tasks.rake",
+     "test/sauron_test.rb",
+     "test/test_helper.rb"
+  ]
   s.homepage = %q{http://github.com/bellmyer/sauron}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Multi-threaded, automated testing toolkit}
+  s.test_files = [
+    "test/sauron_test.rb",
+     "test/test_helper.rb"
+  ]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
