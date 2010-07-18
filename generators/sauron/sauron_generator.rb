@@ -10,6 +10,9 @@ class SauronGenerator < Rails::Generator::Base
       
       m.directory 'lib/sauron'
       m.file 'lib/sauron/watchr.rb', 'lib/sauron/watchr.rb' 
+      
+      m.directory 'lib/tasks'
+      m.file 'lib/tasks/sauron.rake'
     end
   end
   
