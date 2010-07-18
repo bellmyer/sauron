@@ -64,7 +64,7 @@ def setup_databases
     runners = worker['runners'] if worker['runners'] > runners && worker['type'] == 'local'
   end
  
-  print "setting up #{runners} databases"
+  print "setting up #{runners} databases (you can change in config/hydra.yml)"
   STDOUT.flush
 
   # setup each database #
