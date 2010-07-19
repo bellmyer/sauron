@@ -23,9 +23,8 @@ WARNING: This is still a *very* new gem (only in existence since July 17th, 2010
 The first step is to include the necessary gems in your config/environments/test.rb file:
 
   config.gem 'sauron'
-  config.gem 'bellmyer-hydra', :lib => 'hydra'
 
-The first is the Sauron gem, and the second is a fork of the Hydra gem that I modified to support multiple databases.  
+The is the Sauron gem, which will also include the Watchr gem and a fork of the Hydra gem that I modified to support multiple databases.  
 
 === Edit your database configuration
 
@@ -57,7 +56,7 @@ While developing your rails app, run:
 
   ruby script/sauron
 
-which will launch Sauron and watch your app.  Ta-da! Multi-threaded, multi-database, automatic testing goodness!
+which will launch Sauron and watch your app. Use Ctrl-\ to refresh your testing suite after adding files. Ta-da! Multi-threaded, multi-database, automatic testing goodness!
 
 == For advanced users
 
