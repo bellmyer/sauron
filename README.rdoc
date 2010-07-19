@@ -71,6 +71,8 @@ Help me make this tool better. Fork it, fix it, send a pull request. My low publ
 
 This is very new. I can't see how it would damage anything, but I guess that's what everyone says before they damage something. Also, I've traditionally used shoulda over rspec, so there may be glitches in what files Sauron watches/runs in rspec mode.  If you see something wrong, let me know.
 
+While the Hydra gem supports multiple computers over a network, Sauron doesn't at this time. That might become a priority if people ask. It will definitely become a priority if somebody buys me a multi-core system I can add to my testing arsenal :)
+
 This was put together quickly. If you don't feel like the underlying code is beautiful, this was largely hacked together during Ruby Midwest weekend, during hours that should have been used for sleeping.
 
 
