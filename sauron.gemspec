@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sauron}
-  s.version = "0.1.17"
+  s.version = "0.1.18"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jaime Bellmyer"]
@@ -13,11 +13,11 @@ Gem::Specification.new do |s|
   s.description = %q{Speed up your automated tests with multiple databases and workers.}
   s.email = %q{jaime@kconrails.com}
   s.extra_rdoc_files = [
-    "README"
+    "README.rdoc"
   ]
   s.files = [
     "MIT-LICENSE",
-     "README",
+     "README.rdoc",
      "Rakefile",
      "VERSION",
      "generators/sauron/USAGE",
