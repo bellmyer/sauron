@@ -1,3 +1,3 @@
 workers:
   - type: local
-    runners: <%%= ENV['SAURON_WORKERS'] %>
+    runners: <%= ENV['SAURON_WORKERS'] %>

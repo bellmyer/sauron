@@ -18,7 +18,7 @@ class SauronTemplate
   end
   
   def set_hydra
-    if hydra = !!(`rake -T hydra:sauron` =~ /hydra:sauron/)
+    if self.hydra = !!(`rake -T hydra:sauron` =~ /hydra:sauron/)
       message "Using hydra to run multiple tests in parallel"
     else
       message "You don't have hydra properly setup.  All tests will be run in single-threaded mode."
