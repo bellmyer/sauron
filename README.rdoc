@@ -1,0 +1,77 @@
+= Sauron
+
+The all-seeing testing toolkit with many workers. Think multi-threaded, multi-database autotest. It continually watches your application for code changes like autotest, then runs them multi-threaded, each thread having its own database, to take maximum advantage of your computer's multiple cores/processors. Fast!
+
+== Why a new testing toolkit?
+
+For a long time, my holy grail of testing has been multi-threaded autotest.  Autotest is awesome, watching my application in real time and only running tests for code that has changed. But it doesn't take advantage of the growing number of cores and processors that computers have today.
+
+Parallel_specs solves the multi-threaded, multi-database problem, but it has to be run manually, and runs all your tests at once. It also doesn't split up the test suite very efficiently, resulting in one thread finishing significantly sooner than the other. 
+
+== How does it work?
+
+Sauron uses the watchr gem to watch your rails files for changes, and runs only the tests related to those changes. Sauron comes with a basic, but user-changeable, watchr script. This part is much like autotest.
+
+When Sauron detects that tests need to be run, it runs single tests with a direct ruby command. If there are multiple files, however, it kicks off a customized version of the hydra gem, creating multiple workers to run pieces of the test suite efficiently.
+
+== How do I use it?
+
+WARNING: This is still a *very* new gem (only in existence since July 17th, 2010).  Use very carefully.
+
+=== Include the gems
+
+The first step is to include the necessary gems in your config/environments/test.rb file:
+
+  config.gem 'sauron'
+  config.gem 'bellmyer-hydra', :lib => 'hydra'
+
+The first is the Sauron gem, and the second is a fork of the Hydra gem that I modified to support multiple databases.  
+
+=== Edit your database configuration
+
+Edit your config/database.yml so that your test database name includes the worker number environment variable.  Here's an example:
+
+  test:
+    adapter: mysql
+    database: app_test<%= ENV['HYDRA_WORKER_ID'] %>
+
+Or for sqlite3:
+
+  test:
+    adapter: sqlite3
+    database: app_test<%= ENV['HYDRA_WORKER_ID'] %>.sqlite3
+
+=== Run the Sauron generator
+
+  ruby script/generate sauron
+
+By default, it will create a setup with 4 workers (threads/databases used during tests) and assume you are using testunit. You can change both of these with commandline arguments:
+
+  ruby script/generate sauron --workers=10 --rspec
+
+If you ever change your mind, just edit the config/sauron.yml file.
+
+=== Run Sauron
+
+While developing your rails app, run:
+
+  ruby script/sauron
+
+which will launch Sauron and watch your app.  Ta-da! Multi-threaded, multi-database, automatic testing goodness!
+
+== For advanced users
+
+The generator creates a watchr script called sauron_watchr.rb in the root directory of your app. I think it has a good basic setup, but customize it all  you want.
+
+== For really advanced users
+
+Help me make this tool better. Fork it, fix it, send a pull request. My low public profile and crippling need acceptance ensure you'll get a prompt, friendly response.
+
+== Caveats
+
+This is very new. I can't see how it would damage anything, but I guess that's what everyone says before they damage something. Also, I've traditionally used shoulda over rspec, so there may be glitches in what files Sauron watches/runs in rspec mode.  If you see something wrong, let me know.
+
+This was put together quickly. If you don't feel like the underlying code is beautiful, this was largely hacked together during Ruby Midwest weekend, during hours that should have been used for sleeping.
+
+
+Copyright (c) 2010 Jaime Bellmyer, released under the MIT license
