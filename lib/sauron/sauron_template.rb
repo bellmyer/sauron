@@ -47,7 +47,7 @@ class SauronTemplate
     message "running #{files.first.size} tests: #{joined_files}"
 
     if hydra
-      system "time rake hydra:sauron RAILS_ENV=test FILE_LIST=#{joined_files} SAURON_WORKERS=#{$sauron.workers}"
+      system "time rake hydra:sauron RAILS_ENV=test FILE_LIST=#{joined_files} SAURON_WORKERS=#{workers}"
     else
       case framework
       when 'testunit'
