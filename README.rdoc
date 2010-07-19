@@ -24,7 +24,9 @@ The first step is to include the necessary gems in your config/environments/test
 
   config.gem 'sauron'
 
-The is the Sauron gem, which will also include the Watchr gem and a fork of the Hydra gem that I modified to support multiple databases.  
+The is the Sauron gem, which will also include the Watchr gem and a fork of the Hydra gem that I modified to support multiple databases. To get them on your system, run:
+
+  rake gems:install RAILS_ENV=test 
 
 === Edit your database configuration
 
