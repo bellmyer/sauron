@@ -1,3 +1,3 @@
 require 'sauron/sauron_template'
 
-Sauron = SauronTemplate
+Sauron = SauronTemplate.new
