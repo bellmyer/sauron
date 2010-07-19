@@ -65,7 +65,7 @@ The generator creates a watchr script called sauron_watchr.rb in the root direct
 
 == For really advanced users
 
-Help me make this tool better. Fork it, fix it, send a pull request. My low public profile and crippling need acceptance ensure you'll get a prompt, friendly response.
+Help me make this tool better. Fork it, fix it, send a pull request. My low public profile and crippling need for acceptance ensure you'll get a prompt, friendly response.
 
 == Caveats
 
