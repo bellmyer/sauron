@@ -1,6 +1,6 @@
 class SauronGenerator < Rails::Generator::Base
   def manifest
-    options[:runners] ||= 4
+    options[:workers] ||= 4
 
     options[:rspec] ||= false
     options[:testunit] ||= false
@@ -26,7 +26,7 @@ class SauronGenerator < Rails::Generator::Base
   protected
   
   def add_options!(opt)
-    opt.on('--runners='){|v| options[:runners] = v}
+    opt.on('--workers='){|v| options[:workers] = v}
     opt.on('--rspec'){|v| options[:rspec] = v}
     opt.on('--testunit'){|v| options[:testunit] = v}
   end
