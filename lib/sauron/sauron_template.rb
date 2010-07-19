@@ -53,7 +53,7 @@ class SauronTemplate
       when 'testunit'
         system "time ruby -I.:lib:test -rubygems -e \"%w[#{files.join(' ')}].each {|f| require f}\""  
       when 'rspec'
-        system "time ruby script/spec -O spec/spect.opts #{files.join(' ')}"
+        system "time ruby script/spec -O spec/spec.opts #{files.join(' ')}"
       end
     end
   end
