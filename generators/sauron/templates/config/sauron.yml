@@ -1,2 +1,2 @@
-workers: <%= options[:runners] %>
-framework: <%= options[:framework] %>
+:workers: <%= options[:runners] %>
+:framework: <%= options[:framework] %>
