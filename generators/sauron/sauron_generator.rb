@@ -2,12 +2,18 @@ class SauronGenerator < Rails::Generator::Base
   def manifest
     options[:runners] ||= 4
 
+    options[:rspec] ||= false
+    options[:testunit] ||= false
+    
+    options[:framework] = options[:rspec] ? 'rspec' : 'testunit'
+
     record do |m|
       m.file 'sauron_watchr.rb', 'sauron_watchr.rb'
       m.file 'test_helper.rb', 'test_helper.rb'
-      m.file 'sauron', 'sauron', :chmod => 0755
+      m.file 'script/sauron', 'script/sauron', :chmod => 0755
 
-      m.template 'config/hydra.yml', 'config/hydra.yml'
+      m.file 'config/hydra.yml', 'config/hydra.yml'
+      m.template 'config/sauron.yml', 'config/sauron.yml'
       
       m.directory 'lib/sauron'
       m.file 'lib/sauron/watchr.rb', 'lib/sauron/watchr.rb' 
@@ -21,5 +27,7 @@ class SauronGenerator < Rails::Generator::Base
   
   def add_options!(opt)
     opt.on('--runners='){|v| options[:runners] = v}
+    opt.on('--rspec'){|v| options[:rspec] = v}
+    opt.on('--testunit'){|v| options[:testunit] = v}
   end
 end

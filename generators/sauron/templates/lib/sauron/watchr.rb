@@ -1,7 +1,17 @@
 require 'yaml'
+require 'rake'
+require 'rake/task'
 
 def set_hydra
-  $hydra = !!(`rake -T` =~ /rake hydra:sauron\s+/)
+  if $hydra = Rake::Task.tasks.include?('hydra:sauron')
+    message "Using hydra to run multiple tests in parallel"
+  else
+    message "You don't have hydra properly setup.  All tests will be run in single-threaded mode."
+  end
+end
+
+def load_config
+  $sauron = YAML.load_file('config/sauron.yml')
 end
 
 def run_routing_tests
@@ -11,7 +21,13 @@ end
 
 def run_single_test file
   message "running #{file}"
-  system "time ruby -I.:lib:test -rubygems -e \"require '#{file}'\""  
+  
+  case $sauron[:framework]
+  when 'testunit'
+    system "time ruby -I.:lib:test -rubygems -e \"require '#{file}'\""
+  when 'rspec'
+    system "time ruby script/spec -O spec/spect.opts #{file}"
+  end
 end
 
 def run_multiple_tests *files
@@ -20,9 +36,14 @@ def run_multiple_tests *files
   message "running #{files.first.size} tests: #{joined_files}"
   
   if $hydra
-    system "time rake hydra:sauron RAILS_ENV=test FILE_LIST=#{joined_files}"
+    system "time rake hydra:sauron RAILS_ENV=test FILE_LIST=#{joined_files} SAURON_WORKERS=#{$sauron[:workers]}"
   else
-    system "time ruby -I.:lib:test -rubygems -e \"%w[#{files.join(' ')}].each {|f| require f}\""  
+    case $sauron[:framework]
+    when 'testunit'
+      system "time ruby -I.:lib:test -rubygems -e \"%w[#{files.join(' ')}].each {|f| require f}\""  
+    when 'rspec'
+      system "time ruby script/spec -O spec/spect.opts #{files.join(' ')}"
+    end
   end
 end
 
@@ -32,23 +53,61 @@ def run_all_tests
 end
 
 def unit_tests
-  Dir.glob('test/unit/*_test.rb')
+  case $sauron[:framework]
+  when 'testunit'
+    Dir.glob('test/unit/*_test.rb')
+  when 'rspec'
+    Dir.glob('spec/models/*_spec.rb')
+  end
 end
 
 def helper_tests
-  Dir.glob('test/unit/helpers/*_test.rb')
+  case $sauron[:framework]
+  when 'testunit'
+    Dir.glob('test/unit/helpers/*_test.rb')
+  when 'rspec'
+    Dir.glob('spec/helpers/*_spec.rb')
+  end
 end
 
 def functional_tests
-  Dir.glob('test/functional/*_test.rb')
+  case $sauron[:framework]
+  when 'testunit'
+    Dir.glob('test/functional/*_test.rb')
+  when 'rspec'
+    Dir.glob('spec/controllers/*_spec.rb')
+  end
+end
+
+def view_tests controller = :all
+  case $sauron[:framework]
+  when 'testunit'
+    []
+  when 'rspec'
+    if controller == :all
+      Dir.glob('spec/views/**/*_spec.rb')
+    else
+      Dir.glob('spec/views/#{controller}/*_spec.rb')
+    end
+  end
 end
 
 def routing_tests
-  Dir.glob('test/unit/rout{es,ing}_test.rb')
+  case $sauron[:framework]
+  when 'testunit'
+    Dir.glob('test/unit/rout{es,ing}_test.rb')
+  when 'rspec'
+    Dir.glob('spec/models/rout{es,ing}_spec.rb')
+  end
 end
 
 def all_tests
-  Dir.glob('test/**/*_test.rb')
+  case $sauron[:framework]
+  when 'testunit'
+    Dir.glob('test/**/*_test.rb')
+  when 'rspec'
+    Dir.glob('spec/**/*_spec.rb')
+  end
 end
 
 def message body
@@ -57,18 +116,11 @@ def message body
 end
 
 def setup_databases
-  # Find the number of runners #
-  runners = 0
-  hydra_yaml = YAML.load_file('config/hydra.yml')
-  hydra_yaml['workers'].each do |worker|
-    runners = worker['runners'] if worker['runners'] > runners && worker['type'] == 'local'
-  end
- 
-  print "setting up #{runners} databases (you can change in config/hydra.yml)"
+  print "setting up #{$sauron[:workers]} workers and their databases (you can change in config/sauron.yml)"
   STDOUT.flush
 
   # setup each database #
-  runners.times do |i|
+  $sauron[:workers].times do |i|
     print '.'
     STDOUT.flush
     
