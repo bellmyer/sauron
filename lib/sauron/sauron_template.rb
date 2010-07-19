@@ -5,10 +5,12 @@ class SauronTemplate
   attr_accessor :framework, :workers, :hydra
   
   def initialize
-    config = YAML::load(ERB.new(IO.read(config_file)).result)
+    if File.exists? config_file
+      config = YAML::load(ERB.new(IO.read(config_file)).result)
     
-    framework = config[:framework]
-    workers = config[:workers]
+      self.framework = config[:framework]
+      self.workers = config[:workers]
+    end
   end
   
   def config_file
