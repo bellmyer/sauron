@@ -1,3 +1,3 @@
-require 'lib/sauron_template'
+require 'sauron/sauron_template'
 
 Sauron = SauronTemplate
