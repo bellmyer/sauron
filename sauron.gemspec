@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jaime Bellmyer"]
-  s.date = %q{2010-07-18}
+  s.date = %q{2010-07-19}
   s.description = %q{Speed up your automated tests with multiple databases and workers.}
   s.email = %q{jaime@kconrails.com}
   s.extra_rdoc_files = [
@@ -23,10 +23,11 @@ Gem::Specification.new do |s|
      "generators/sauron/USAGE",
      "generators/sauron/sauron_generator.rb",
      "generators/sauron/templates/config/hydra.yml",
+     "generators/sauron/templates/config/sauron.yml",
      "generators/sauron/templates/lib/sauron/watchr.rb",
      "generators/sauron/templates/lib/tasks/sauron.rake",
-     "generators/sauron/templates/sauron",
      "generators/sauron/templates/sauron_watchr.rb",
+     "generators/sauron/templates/script/sauron",
      "generators/sauron/templates/test_helper.rb",
      "lib/sauron.rb",
      "sauron.gemspec",
