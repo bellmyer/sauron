@@ -30,8 +30,6 @@ begin
     gem.email = "jaime@kconrails.com"
     gem.homepage = "http://github.com/bellmyer/sauron"
     gem.authors = ['Jaime Bellmyer']
-    gem.add_development_dependency "bellmyer-hydra", ">= 0.20.9"
-    gem.add_development_dependency "watchr", ">= 0.6"
     gem.add_dependency 'bellmyer-hydra', '>= 0.20.10'
     gem.add_dependency 'watchr', '>= 0.6'
   end
