@@ -37,7 +37,7 @@ class SauronTemplate
     when 'testunit'
       system "time ruby -I.:lib:test -rubygems -e \"require '#{file}'\""
     when 'rspec'
-      system "time ruby script/spec -O spec/spect.opts #{file}"
+      system "time ruby script/spec -O spec/spec.opts #{file}"
     end
   end
 
