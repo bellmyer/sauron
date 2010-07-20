@@ -135,8 +135,10 @@ class SauronTemplate
       print '.'
       STDOUT.flush
 
-      i = '' if i == 0
-      `rake db:reset RAILS_ENV=test HYDRA_WORKER_ID=#{i}`
+      hydra_worker_id = (i == 0 ? '' : i)
+      test_env_number = (i == 0 ? '' : i + 1)
+      
+      `rake db:reset RAILS_ENV=test HYDRA_WORKER_ID=#{hydra_worker_id} TEST_ENV_NUMBER=#{test_env_number}`
     end
   end
 
