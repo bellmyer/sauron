@@ -4,11 +4,29 @@ case Sauron.framework
 when 'testunit'
   # Unit tests #
   watch('test/unit/(.*)_test\.rb'){|f| Sauron.run_pattern_tests 'test/unit/', f[1], '_test.rb'}
-  watch('app/models/(.*)\.rb'){|f| Sauron.run_single_test "test/unit/#{f[1]}_test.rb"}
-
+  watch('app/models/(.*)\.rb') do |f|
+    files = Dir.glob("test/unit/*_#{f[1]}_test.rb")
+    
+    if files.size == 1
+      Sauron.run_single_test files.first
+    else
+      Sauron.run_multiple_tests files
+    end
+  end
+  
   # Functional tests #
   watch('test/functional/(.*)_controller_test\.rb'){|f| Sauron.run_pattern_tests 'test/functional/', f[1], '_controller_test.rb'}
-  watch('app/controllers/(.*)\.rb'){|f| Sauron.run_single_test "test/functional/#{f[1]}_test.rb"}
+
+  watch('app/controllers/(.*)\.rb') do |f|
+    files = Dir.glob("test/functional/*_#{f[1]}_test.rb")
+    
+    if files.size == 1
+      Sauron.run_single_test files.first
+    else
+      Sauron.run_multiple_tests files
+    end
+  end
+
   watch('app/views/(.*)/.*\.html.erb'){|f| Sauron.run_single_test "test/functional/#{f[1]}_controller_test.rb"}
 
   # Routing tests #
