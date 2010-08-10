@@ -40,6 +40,17 @@ class SauronTemplate
       system "time ruby script/spec -O spec/spec.opts #{file}"
     end
   end
+  
+  def run_pattern_tests prefix, pattern, suffix
+    files = []
+    
+    elements = pattern.split(/_/)
+    while elements.shift
+      files << Dir.glob("#{prefix}#{elements.join('_')}#{suffix}") unless elements.empty?
+    end
+    
+    run_multiple_tests files
+  end
 
   def run_multiple_tests *files
     joined_files = files.join(',')

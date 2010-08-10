@@ -3,16 +3,19 @@ require 'lib/sauron/watchr'
 case Sauron.framework
 when 'testunit'
   # Unit tests #
-  watch('test/unit/.*_test\.rb'){|f| Sauron.run_single_test f[0]}
+#  watch('test/unit/.*_test\.rb'){|f| Sauron.run_single_test f[0]}
+  watch('test/unit/(.*)_test\.rb'){|f| Sauron.run_pattern_test 'test/unit/', f[1], '_test.rb'}
   watch('app/models/(.*)\.rb'){|f| Sauron.run_single_test "test/unit/#{f[1]}_test.rb"}
 
   # Functional tests #
-  watch('test/functional/.*_test\.rb'){|f| Sauron.run_single_test f[0]}
+#  watch('test/functional/.*_test\.rb'){|f| Sauron.run_single_test f[0]}
+  watch('test/functional/(.*)_controller_test\.rb'){|f| Sauron.run_pattern_test 'test/functional/', f[1], '_controller_test.rb'}
   watch('app/controllers/(.*)\.rb'){|f| Sauron.run_single_test "test/functional/#{f[1]}_test.rb"}
   watch('app/views/(.*)/.*\.html.erb'){|f| Sauron.run_single_test "test/functional/#{f[1]}_controller_test.rb"}
 
   # Routing tests #
   watch('config/routes.rb'){|f| Sauron.run_routing_tests }
+  watch('test/unit/rout{ing,es}_test.rb'){|f| Sauron.run_routing_tests }
 
   # Multiple tests #
   watch('test/test_helper.rb'){|f| Sauron.run_all_tests }
