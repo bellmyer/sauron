@@ -45,9 +45,9 @@ class SauronTemplate
     files = []
     
     elements = pattern.split(/_/)
-    while elements.shift
+    begin
       files << Dir.glob("#{prefix}#{elements.join('_')}#{suffix}") unless elements.empty?
-    end
+    end while elements.shift
     
     run_multiple_tests files
   end
