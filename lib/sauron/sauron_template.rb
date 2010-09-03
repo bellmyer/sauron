@@ -49,7 +49,7 @@ class SauronTemplate
       files << Dir.glob("#{prefix}#{elements.join('_')}#{suffix}") unless elements.empty?
     end while elements.shift
     
-    run_multiple_tests files
+    files.size == 1 ? run_single_test(files.first) : run_multiple_tests(files)
   end
 
   def run_multiple_tests *files
