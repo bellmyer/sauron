@@ -1,2 +1,2 @@
-:workers: <%= options[:workers] %>
-:framework: <%= options[:framework] %>
+:workers: <%= options.workers %>
+:framework: <%= test_framework %>
